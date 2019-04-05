@@ -1,3 +1,4 @@
+import 'bootstrap/dist/css/bootstrap.min.css';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
@@ -7,7 +8,7 @@ import { Links } from "./pages/links";
 import { Cats } from './pages/cats';
 import { Login } from './pages/login';
 import { Profile } from './pages/profile';
-import { TopNavBar } from './components/top_navbar/top_navbar';
+import { Header } from "./components/header/header";
 
 ReactDOM.render(
     // This is the router component
@@ -18,7 +19,7 @@ ReactDOM.render(
             */
         }
         <div>
-            <TopNavBar/>
+            <Header />
             {
                 /*
                     The Switch component will render one of the components
@@ -34,9 +35,14 @@ ReactDOM.render(
                     */
                 }
                 <Route exact path="/" component={Links} />
-                <Route exact path="/cats" component={Cats} />
-                <Route exact path="/login" component={Login} />
+                <Route exact path="/sign_in" component={Login} />
+                <Route exact path="/sign_up" component={Login} />
                 <Route exact path="/profile" component={Profile} />
+                <Route exact path="/link/:link_id" component={Links} />
+                <Route exact path="/link_editor/:link_id" component={Links} />
+                <Route exact path="/link_editor" component={Links} />
+                <Route exact path="/user/:user_id" component={Links} />
+
             </Switch>
             <div>Footer!</div>
         </div>

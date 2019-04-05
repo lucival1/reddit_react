@@ -3,6 +3,7 @@ import * as joi from "joi";
 import { withRouter } from "react-router-dom";
 import * as H from 'history';
 import { setAuthToken } from "../components/with_auth/with_auth";
+import Button from "react-bootstrap/Button";
 
 const credentialSchema = {
     email: joi.string().email().required(),
@@ -43,7 +44,7 @@ export class LoginInternal extends React.Component<LoginProps, LoginState> {
                     placeholder="Password"
                     onKeyUp={(e) => this._updatePassword((e as any).target.value)}
                 />
-                <button onClick={() => this._handleSubmit()}>Submit</button>
+                <Button onClick={() => this._handleSubmit()}>Submit</Button>
             </div>
         );
     }
