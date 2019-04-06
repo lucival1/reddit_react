@@ -1,10 +1,10 @@
 import React from 'react';
 import { Link } from "react-router-dom";
-import { withAuth } from "../with_auth/with_auth";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import Button from "react-bootstrap/Button";
+import { BasicBtn } from "../buttons/basic_btn";
+import { withAuth } from "../with_auth/with_auth";
 
 const headerStyle: React.CSSProperties = {
     backgroundColor: "#333333",
@@ -77,18 +77,8 @@ class HeaderInternal extends React.Component<HeaderInternalProps, HeaderInternal
             return (
                 <Col xs={6} md={6}>
                     <div style={{ marginRight:"10%", float: "right" }}>
-                        <Button
-                            href="/sign_in"
-                            variant="outline-light"
-                            style={{ marginRight:"15px" }}
-                        >SIGN IN
-                        </Button>
-                        <Button
-                            href="/sign_up"
-                            variant="outline-light"
-                            style={{ marginRight:"15px" }}
-                        >SIGN UP
-                        </Button>
+                        <BasicBtn style={{ marginRight:"15px" }} name={"SIGN IN"} path={ "/sign_in" } />
+                        <BasicBtn style={{ marginRight:"15px" }} name={"SIGN UP"} path={ "/sign_in" } />
                     </div>
                     {/*<Link style={ linkStyle } to="/sign_in">SIGN IN</Link>*/}
                 </Col>
