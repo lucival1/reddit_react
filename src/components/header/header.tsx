@@ -13,8 +13,10 @@ const headerStyle: React.CSSProperties = {
     fontFamily: "Monaco",
     height: "3em",
     padding: "15px",
-    margin: "2px",
     bottom: "10px",
+    position: "fixed",
+    top: "0",
+    zIndex: 80,
 
 };
 
