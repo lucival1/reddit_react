@@ -99,7 +99,7 @@ export class LoginInternal extends React.Component<LoginProps, LoginState> {
 // withRouter pass some props that contain the history to the
 // <LoginInternal> component and returns a new component named
 // <Login>
-export const Login = withRouter(props => <LoginInternal {...props}/>);
+export const Login = withRouter(props => <LoginInternal {...props} />);
 
 async function getToken(email: string, password: string) {
     return new Promise<string>(function (resolve, reject) {

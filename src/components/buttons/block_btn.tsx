@@ -1,18 +1,18 @@
 import React from 'react';
 import Button from "react-bootstrap/Button";
 
-interface BasicBtnProps {
+interface BlockBtnProps {
     style?: React.CSSProperties,
     variant: any,
     path?: string,
-    name: string
+    name: string,
 }
 
-interface BasicBtnState {
+interface BlockBtnState {
 }
 
-export class BasicBtn extends React.Component<BasicBtnProps> {
-    public constructor(props: BasicBtnProps) {
+export class BlockBtn extends React.Component<BlockBtnProps> {
+    public constructor(props: BlockBtnProps) {
         super(props);
     }
 
@@ -23,6 +23,7 @@ export class BasicBtn extends React.Component<BasicBtnProps> {
                 href={path}
                 variant={variant}
                 style={style}
+                block
             >{name}
             </Button>
         );

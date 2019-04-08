@@ -5,7 +5,6 @@ import './index.css';
 import * as serviceWorker from './serviceWorker';
 import { BrowserRouter, Switch, Route, Link } from "react-router-dom";
 import { Links } from "./pages/links";
-import { Cats } from './pages/cats';
 import { Login } from './pages/login';
 import { Profile } from './pages/profile';
 import { Header } from "./components/header/header";
