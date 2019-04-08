@@ -102,4 +102,4 @@ class HeaderInternal extends React.Component<HeaderInternalProps, HeaderInternal
 }
 
 // withAuth will trigger a re-render
-export const Header = withAuth(props => <HeaderInternal token={props.authToken}/>);
+export const Header = withAuth(props => <HeaderInternal token={props.authToken} />);

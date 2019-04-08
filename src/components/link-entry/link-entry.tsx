@@ -54,22 +54,22 @@ export class LinkEntry extends React.Component<LinkEntryProps> {
     public render() {
         const {...item} = this.props;
         return (
-            <Row style={ rowStyle }>
+            <Row style={rowStyle}>
                 <Col xs={1} md={1}
-                     style={ voteStyle}
+                     style={voteStyle}
                 >
                     <Col xs={12} md={12} style={{padding: "0px"}}>
-                        <i className="fas fa-arrow-alt-circle-up fa-2x" onClick={ () => item.onUpvote() } /><br/>
+                        <i className="fas fa-arrow-alt-circle-up fa-2x" onClick={() => item.onUpvote()} /><br/>
                     </Col>
-                    <Col xs={12} md={12} style={ scoreStyle }>
+                    <Col xs={12} md={12} style={scoreStyle}>
                         {item.score}<br/>
                     </Col>
                     <Col xs={12} md={12} style={{padding: "0px"}}>
-                        <i className="fas fa-arrow-alt-circle-down fa-2x" onClick={ () => item.onDownvote() } />
+                        <i className="fas fa-arrow-alt-circle-down fa-2x" onClick={() => item.onDownvote()} />
                     </Col>
                 </Col>
 
-                <Col xs={11} md={11} style={ entryStyle }>
+                <Col xs={11} md={11} style={entryStyle}>
                     <Col xs={12} md={12}>
                         Posted by /u/{item.userName} x hours ago
                     </Col>
