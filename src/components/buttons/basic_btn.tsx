@@ -2,25 +2,28 @@ import React from 'react';
 import Button from "react-bootstrap/Button";
 
 interface BasicBtnProps {
-    style: React.CSSProperties,
-    path: string,
+    style?: React.CSSProperties,
+    variant: any,
+    path?: string,
     name: string
 }
 
-interface BasicBtnState {}
+interface BasicBtnState {
+}
 
 export class BasicBtn extends React.Component<BasicBtnProps> {
     public constructor(props: BasicBtnProps) {
         super(props);
     }
+
     public render() {
-        const {style, name, path} = this.props;
+        const {style, variant, name, path} = this.props;
         return (
             <Button
-                href={ path }
-                variant="outline-light"
-                style={ style }
-            >{ name }
+                href={path}
+                variant={variant}
+                style={style}
+            >{name}
             </Button>
         );
     }
