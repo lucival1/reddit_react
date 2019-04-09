@@ -5,7 +5,7 @@ import {getAuthToken} from "../components/with_auth/with_auth";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import {CommunityInfo} from "../components/community-info/community-info";
+import {CommunityInfo} from "../components/community_info/community_info";
 
 interface LinksItem {
     userId: number;

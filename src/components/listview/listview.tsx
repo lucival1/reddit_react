@@ -1,5 +1,5 @@
 import React from 'react';
-import {LinkEntry} from "../link-entry/link-entry";
+import {LinkEntry} from "../link_entry/link_entry";
 
 interface ListItem {
     userId: number;
@@ -34,8 +34,8 @@ export class Listview extends React.Component<ListviewProps, ListviewState> {
                                 userName={"Luci"}
                                 userId={item.userId}
                                 score={20}
-                                onUpvote={() => console.log("Upvote link-entry with ID", item.id)}
-                                onDownvote={() => console.log("Downvote link-entry with ID", item.id)}
+                                onUpvote={() => console.log("Upvote link_entry with ID", item.id)}
+                                onDownvote={() => console.log("Downvote link_entry with ID", item.id)}
                             />
                         );
                     })}
