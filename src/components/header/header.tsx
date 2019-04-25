@@ -55,13 +55,13 @@ class HeaderInternal extends React.Component<HeaderInternalProps, HeaderInternal
               /> reddit</Link>
 
           </Col>
-          {this._renderSomethingPrivate()}
+          {this._renderLoginOrProfile()}
         </Row>
       </Container>
     );
   }
 
-  private _renderSomethingPrivate() {
+  private _renderLoginOrProfile() {
     const token = this.props.token;
     if (token) {
       return (
