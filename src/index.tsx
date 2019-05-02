@@ -5,6 +5,7 @@ import './index.css';
 import * as serviceWorker from './serviceWorker';
 import { BrowserRouter, Switch, Route, Link } from "react-router-dom";
 import { Links } from "./pages/links";
+import { LinkDetails } from "./pages/link_details";
 import { Login } from './pages/login';
 import { Profile } from './pages/profile';
 import { Header } from "./components/header/header";
@@ -37,7 +38,7 @@ ReactDOM.render(
                 <Route exact path="/sign_in" component={Login} />
                 <Route exact path="/sign_up" component={Login} />
                 <Route exact path="/profile" component={Profile} />
-                <Route exact path="/link/:link_id" component={Links} />
+                <Route exact path="/link/:link_id" component={LinkDetails} />
                 <Route exact path="/link_editor/:link_id" component={Links} />
                 <Route exact path="/link_editor" component={Links} />
                 <Route exact path="/user/:user_id" component={Links} />

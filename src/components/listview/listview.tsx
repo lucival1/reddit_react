@@ -1,46 +1,25 @@
 import React from 'react';
-import {LinkEntry} from "../link_entry/link_entry";
-
-interface ListItem {
-    userId: number;
-    id: number;
-    title: string;
-    url: string,
-}
+import ListGroup from "react-bootstrap/ListGroup";
 
 interface ListviewProps {
-    items: ListItem[];
+  items: JSX.Element[];
 }
 
 interface ListviewState {
 }
 
 export class Listview extends React.Component<ListviewProps, ListviewState> {
-    public render() {
-        if (this.props.items.length < 1) {
-            return <div>There is no items!</div>;
-        } else {
-            return (
-                <div>
-                    {this.props.items.map(function (item, index) {
-                        return (
-                            <LinkEntry
-                                key={index}
-                                id={item.id}
-                                title={item.title}
-                                url={item.url}
-                                commentCount={10}
-                                date={"21/03/19"}
-                                userName={"Luci"}
-                                userId={item.userId}
-                                score={20}
-                                onUpvote={() => console.log("Upvote link_entry with ID", item.id)}
-                                onDownvote={() => console.log("Downvote link_entry with ID", item.id)}
-                            />
-                        );
-                    })}
-                </div>
-            );
-        }
+  public render() {
+    if (this.props.items.length < 1) {
+      return <div>There is no items!</div>;
+    } else {
+      return (
+        <ul style={{listStyle: "none"}}>
+          {this.props.items.map(function (item, itemIndex) {
+            return <li key={itemIndex}>{item}</li>;
+          })}
+        </ul>
+      );
     }
+  }
 }
