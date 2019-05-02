@@ -7,6 +7,8 @@ import {getAuthToken} from "../with_auth/with_auth";
 const linkStyle: React.CSSProperties = {
   fontSize: "12px",
   height: "20px",
+  textDecoration: 'none',
+  color: 'black',
 }
 
 const commentStyle: React.CSSProperties = {
@@ -55,24 +57,36 @@ export class LinkEntry extends React.Component<LinkEntryProps> {
   public render() {
     const {...item} = this.props;
     return (
-      <Link to={`/link/${item.id}`} style={{textDecoration: "none"}}>
-        <Row style={rowStyle}>
-          <Col xs={1} md={1}
-               style={voteStyle}
+      <Row style={rowStyle}>
+        <Col xs={1} md={1}
+             style={voteStyle}
+        >
+          <Col xs={12} md={12}
+               style={{padding: "0px"}}
           >
-            <Col xs={12} md={12} style={{padding: "0px"}}>
-              <i className="fas fa-arrow-alt-circle-up fa-2x" onClick={() => this._handleVotes(item.id, 'up')}/><br/>
-            </Col>
-            <Col xs={12} md={12} style={scoreStyle}>
-              {item.voteCount ? item.voteCount : 0}<br/>
-            </Col>
-            <Col xs={12} md={12} style={{padding: "0px"}}>
-              <i className="fas fa-arrow-alt-circle-down fa-2x" onClick={() => this._handleVotes(item.id, 'down')}/>
-            </Col>
+            <i className="fas fa-arrow-alt-circle-up fa-2x" onClick={() => this._handleVotes(item.id, 'up')}/><br/>
           </Col>
+          <Col xs={12} md={12}
+               style={scoreStyle}
+          >
+            {item.voteCount ? item.voteCount : 0}<br/>
+          </Col>
+          <Col xs={12} md={12}
+               style={{padding: "0px"}}
+          >
+            <i className="fas fa-arrow-alt-circle-down fa-2x" onClick={() => this._handleVotes(item.id, 'down')}/>
+          </Col>
+        </Col>
 
-          <Col xs={11} md={11} style={entryStyle}>
-            <Col xs={12} md={12}>
+        <Col xs={11} md={11}
+             style={entryStyle}
+        >
+          <Link to={`/link/${item.id}`}
+                style={linkStyle}
+          >
+            <Col xs={12} md={12}
+                 style={{ textDecoration: 'none' }}
+            >
               Posted by /u/{item.email} {this._renderTimeSinceDate(item.dateTime)}
             </Col>
             <Col xs={12} md={12}>
@@ -84,9 +98,9 @@ export class LinkEntry extends React.Component<LinkEntryProps> {
             <Col xs={12} md={12}>
               <p style={commentStyle}>{item.commentCount} comments</p>
             </Col>
-          </Col>
-        </Row>
-      </Link>
+          </Link>
+        </Col>
+      </Row>
     );
   }
 
