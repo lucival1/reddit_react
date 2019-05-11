@@ -1,7 +1,5 @@
 import * as React from "react";
 import {Listview} from "../components/listview/listview";
-import {Link} from "react-router-dom";
-import {getAuthToken} from "../components/with_auth/with_auth";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
@@ -64,10 +62,6 @@ export class Links extends React.Component<LinkssProps, LinkssState> {
           <Row>
             <Col xs={2} md={2}/>
             <Col xs={6} md={6}>
-              {this._renderPrivate()}
-              {
-                this._renderSomethingPrivate()
-              }
               <Listview
                 items={
                   filteredLinks.map((link, linkIndex) => {
@@ -84,23 +78,6 @@ export class Links extends React.Component<LinkssProps, LinkssState> {
           </Row>
         </Container>
       );
-    }
-  }
-
-  private _renderSomethingPrivate() {
-    // getAuthToken will not trigger a re-render
-    const token = getAuthToken();
-    if (token) {
-      return <div>{token}</div>;
-    } else {
-      return "";
-    }
-  }
-
-  private _renderPrivate() {
-    const token: string | undefined = (window as any).__token;
-    if (typeof token === "string") {
-      return <Link style={{color: "#ffffff"}} to="/profile">Profile</Link>
     }
   }
 }

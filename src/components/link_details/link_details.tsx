@@ -1,4 +1,45 @@
 import React from 'react';
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
+import {getAuthToken} from "../with_auth/with_auth";
+
+const linkStyle: React.CSSProperties = {
+  fontSize: "12px",
+  height: "20px",
+  textDecoration: 'none',
+  color: 'black',
+}
+
+const commentStyle: React.CSSProperties = {
+  fontSize: "9px",
+}
+
+const rowStyle: React.CSSProperties = {
+  margin: "10px",
+  border: "3px solid black",
+  borderRadius: "5px",
+}
+
+const voteStyle: React.CSSProperties = {
+  borderRight: "3px solid black",
+  padding: "20px 10px 5px 10px",
+  textAlign: "center",
+  lineHeight: "30px",
+  backgroundColor: "rgba(237, 239, 241, 0.8)",
+}
+
+const entryStyle: React.CSSProperties = {
+  padding: "15px",
+  background: "rgb(247, 248, 249)",
+  color: "black"
+}
+
+const scoreStyle: React.CSSProperties = {
+  padding: "0px",
+  height: "40px",
+  fontWeight: "bold",
+  fontSize: "18px",
+}
 
 export interface LinkPreviewDetails {
   id: number;
@@ -21,27 +62,60 @@ interface LinkDetailsState {
 
 export class LinkDetails extends React.Component<LinkDetailsProps, LinkDetailsState> {
   public render() {
+    const {...item} = this.props;
     return (
-      <table className="link-details">
-        <tbody>
-        <tr>
-          <td className="left">
-            <div className="vote-btn">↑</div>
-            <div>{this.props.voteCount ? this.props.voteCount : 0}</div>
-            <div className="vote-btn">↓</div>
-          </td>
-          <td className="right">
-            <div className="audit">{this.renderTimeSinceDate(this.props.dateTime)} ago by {this.props.email}</div>
-            <h2 className="title">{this.props.title}</h2>
-            <div className="url">{this.props.url}</div>
-            <div className="comment-count">{this.props.commentCount} Comments</div>
-          </td>
-        </tr>
-        </tbody>
-      </table>
+      <Row style={rowStyle}>
+        <Col xs={1} md={1} style={voteStyle}>
+          <Col xs={12} md={12} style={{padding: "0px"}}>
+            <i className="fas fa-arrow-alt-circle-up fa-2x" onClick={() => this._handleVotes(item.id, 'up')}/><br/>
+          </Col>
+          <Col xs={12} md={12} style={scoreStyle}>
+            {item.voteCount ? item.voteCount : 0}<br/>
+          </Col>
+          <Col xs={12} md={12} style={{padding: "0px"}}>
+            <i className="fas fa-arrow-alt-circle-down fa-2x" onClick={() => this._handleVotes(item.id, 'down')}/>
+          </Col>
+        </Col>
+
+        <Col xs={11} md={11} style={entryStyle}>
+          <Col xs={12} md={12}
+               style={{textDecoration: 'none'}}
+          >
+            Posted by /u/{item.email} {this._renderTimeSinceDate(item.dateTime)}
+          </Col>
+          <Col xs={12} md={12}>
+            <h3>{item.title}</h3>
+          </Col>
+          <Col xs={12} md={12}>
+            <p style={linkStyle}>{item.url}</p>
+          </Col>
+          <Col xs={12} md={12}>
+            <p style={commentStyle}>{item.commentCount} comments</p>
+          </Col>
+        </Col>
+      </Row>
     );
   }
-  private renderTimeSinceDate(jsonDate: string) {
+
+  private _handleVotes(linkId: number, voteType: string) {
+    (async () => {
+      try {
+        const token = getAuthToken();
+        if (token && voteType === 'up') {
+          await upvoteLink(linkId, token);
+        } else if (token && voteType === 'down') {
+          await downvoteLink(linkId, token);
+        } else {
+          console.log('Vote can\'t be cast.');
+        }
+      } catch (err) {
+        console.log('err', err);
+        this.setState({error: err.error});
+      }
+    })();
+  }
+
+  private _renderTimeSinceDate(jsonDate: string) {
     const time = Date.parse(jsonDate);
     const now = new Date().getTime();
     const difference = (now - time) / 1000;
@@ -59,4 +133,30 @@ export class LinkDetails extends React.Component<LinkDetailsProps, LinkDetailsSt
       return `${days} days`;
     }
   }
+}
+
+async function upvoteLink(linkId: number, jwt: string) {
+  const response = await fetch(
+    `/api/v1/links/${linkId}/upvote`,
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "x-auth-token": jwt,
+      },
+    }
+  );
+}
+
+async function downvoteLink(linkId: number, jwt: string) {
+  const response = await fetch(
+    `/api/v1/links/${linkId}/downvote`,
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "x-auth-token": jwt,
+      },
+    }
+  );
 }
