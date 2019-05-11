@@ -4,6 +4,14 @@ import Col from "react-bootstrap/Col";
 import Image from "react-bootstrap/Image";
 import Row from "react-bootstrap/Row";
 
+const userProfileBoxStyle: React.CSSProperties = {
+  margin: "10px",
+  marginTop: "58px",
+  border: "3px solid black",
+  borderRadius: "5px",
+  background: "rgb(247, 248, 249)"
+}
+
 const userProfileImageStyle: React.CSSProperties = {
   width: "171px",
   height: "180px",
@@ -13,7 +21,6 @@ const userProfileImageStyle: React.CSSProperties = {
 const userProfileContentStyle: React.CSSProperties = {
   fontSize: "1.15rem",
   lineHeight: "1.5",
-  color: "white",
   padding: "15px"
 }
 
@@ -51,7 +58,7 @@ export class UserProfile extends React.Component<UserProfileProps, UserProfileSt
       return <div>Loading...</div>
     } else {
       return (
-        <Col xs={12} md={12}>
+        <Col xs={12} md={12} style={userProfileBoxStyle}>
           <Row>
             <Image src={this.props.pic} style={userProfileImageStyle}
                    rounded/>
