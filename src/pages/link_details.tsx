@@ -94,7 +94,7 @@ export class LinkDetailsInternal extends React.Component<LinkDetailsProps, LinkD
               <Col xs={10} md={10}/>
               <Col xs={2} md={2}>
                 <Button
-                  style={{marginRight: "15px"}}
+                  style={{marginBottom: "20px"}}
                   variant={"primary"}
                   onClick={() => this._handleCreateComment()}
                 >SUBMIT
