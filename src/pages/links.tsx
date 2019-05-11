@@ -5,6 +5,7 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import {CommunityInfo} from "../components/community_info/community_info";
 import {LinkEntry} from "../components/link_entry/link_entry";
+import {FormControl, InputGroup} from "react-bootstrap";
 
 interface LinksItem {
   id: number;
@@ -59,6 +60,19 @@ export class Links extends React.Component<LinkssProps, LinkssState> {
       });
       return (
         <Container style={{background: "rgb(100, 109, 115, 0.7)", marginTop: "4.3em"}} fluid={true}>
+          <Row style={{ paddingTop: "20px" }}>
+            <Col xs={2} md={2}/>
+            <Col xs={6} md={6}>
+              <InputGroup className="mb-3">
+                <FormControl
+                  placeholder="Search"
+                  aria-label="Search"
+                  onKeyUp={(e: any) => this._onSearch(e.currentTarget.value)}
+                />
+              </InputGroup>
+            </Col>
+          </Row>
+
           <Row>
             <Col xs={2} md={2}/>
             <Col xs={6} md={6}>
@@ -66,7 +80,7 @@ export class Links extends React.Component<LinkssProps, LinkssState> {
                 items={
                   filteredLinks.map((link, linkIndex) => {
                     return (
-                        <LinkEntry key={linkIndex} {...link} />
+                      <LinkEntry key={linkIndex} {...link} />
                     );
                   })
                 }
@@ -79,6 +93,10 @@ export class Links extends React.Component<LinkssProps, LinkssState> {
         </Container>
       );
     }
+  }
+
+  private _onSearch(query: string) {
+    this.setState({ query: query });
   }
 }
 
