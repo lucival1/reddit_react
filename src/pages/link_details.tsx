@@ -1,9 +1,14 @@
 import * as React from "react";
-import { LinkDetails as LinkDetailsComponent } from "../components/link_details/link_details";
-import { withRouter } from "react-router";
-import { Comment, CommentDetails } from "../components/comment/comment";
-import { Listview } from "../components/listview/listview";
-import { getAuthToken } from "../components/with_auth/with_auth"
+import {LinkDetails as LinkDetailsComponent} from "../components/link_details/link_details";
+import {withRouter} from "react-router";
+import {Comment, CommentDetails} from "../components/comment/comment";
+import {Listview} from "../components/listview/listview";
+import {getAuthToken} from "../components/with_auth/with_auth"
+import Col from "react-bootstrap/Col";
+import Row from "react-bootstrap/Row";
+import Container from "react-bootstrap/Container";
+import Button from "react-bootstrap/Button";
+import Form from "react-bootstrap/Form";
 
 interface LinkData {
   id: number;
@@ -34,59 +39,80 @@ export class LinkDetailsInternal extends React.Component<LinkDetailsProps, LinkD
       newCommentContent: ""
     };
   }
+
   public componentWillMount() {
     (async () => {
       const data = await getData(this.props.linkId);
-      this.setState({ link: data });
+      this.setState({link: data});
     })();
   }
+
   public render() {
     if (this.state.link === null) {
       return <div>Loading...</div>;
     } else {
-      return <div>
-        <LinkDetailsComponent {...this.state.link} />
-        <Listview
-          items={
-            this.state.link.comments.map((comment, commentIndex) => {
-              return (
-                <Comment key={commentIndex} {...comment} />
-              );
-            })
-          }
-        />
-        {this._renderCommentEditor()}
-      </div>;
+      return (
+        <Container style={{background: "rgb(100, 109, 115, 0.7)", marginTop: "4.3em"}} fluid={true}>
+          <Row>
+            <Col xs={2} md={2}/>
+            <Col xs={7} md={7}>
+              <LinkDetailsComponent {...this.state.link} />
+              <Listview
+                items={
+                  this.state.link.comments.map((comment, commentIndex) => {
+                    return (
+                      <Comment key={commentIndex} {...comment} />
+                    );
+                  })
+                }
+              />
+              {this._renderCommentEditor()}
+            </Col>
+          </Row>
+        </Container>
+      );
     }
   }
+
   private _renderCommentEditor() {
     const token = getAuthToken();
     if (token) {
       return (
         <React.Fragment>
-          <div>
-                        <textarea
-                          className="input-text"
-                          placeholder="Write your comment here"
-                          value={this.state.newCommentContent}
-                          onChange={(e) => this.setState({ newCommentContent: e.currentTarget.value })}
-                        ></textarea>
-          </div>
-          <div>
-            <button
-              onClick={() => this._handleCreateComment()}
-              style={{ width: "100%" }}
-              className="btn"
-            >
-              Submit
-            </button>
-          </div>
+          <Form>
+            <Row>
+              <Col xs={12} md={12}>
+                <Form.Group controlId="newComment.Textarea">
+                  <Form.Control as="textarea" rows="5" placeholder="Enter new comment"
+                                value={this.state.newCommentContent}
+                                onChange={(e: any) => this.setState({newCommentContent: e.currentTarget.value})}
+                  />
+                </Form.Group>
+              </Col>
+            </Row>
+            <Row>
+              <Col xs={10} md={10}/>
+              <Col xs={2} md={2}>
+                <Button
+                  style={{marginRight: "15px"}}
+                  variant={"primary"}
+                  onClick={() => this._handleCreateComment()}
+                >SUBMIT
+                </Button>
+              </Col>
+            </Row>
+          </Form>
         </React.Fragment>
       );
     } else {
-      return <div>Please Sign In if you wish to write a comment...</div>;
+      return (
+        <div style={{color: "white", fontSize: "20px", textAlign: "center"}}>
+          <b>Please Sign In if you wish to write a comment...</b>
+        </div>
+      );
     }
   }
+
   private _handleCreateComment() {
     (async () => {
       try {
@@ -97,6 +123,10 @@ export class LinkDetailsInternal extends React.Component<LinkDetailsProps, LinkD
             this.state.newCommentContent,
             token
           );
+          const data = await getData(this.props.linkId);
+          this.setState({link: data});
+          this.setState({newCommentContent: ""})
+          console.log('this.state.link.comments', this.state);
         }
       } catch (err) {
 
@@ -105,7 +135,7 @@ export class LinkDetailsInternal extends React.Component<LinkDetailsProps, LinkD
   }
 }
 
-export const LinkDetails = withRouter(props => <LinkDetailsInternal linkId={props.match.params.link_id} />)
+export const LinkDetails = withRouter(props => <LinkDetailsInternal linkId={props.match.params.link_id}/>)
 
 async function getData(id: string) {
   const response = await fetch(`/api/v1/links/${id}`);
@@ -119,7 +149,7 @@ async function createComment(linkId: number, content: string, jwt: string) {
     content: content
   };
   const response = await fetch(
-    "/api/v1/comment",
+    "/api/v1/comments",
     {
       method: "POST",
       headers: {
