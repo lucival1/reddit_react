@@ -6,11 +6,21 @@ import Col from "react-bootstrap/Col";
 import {CommunityInfo} from "../components/community_info/community_info";
 import {LinkEntry} from "../components/link_entry/link_entry";
 import {FormControl, InputGroup} from "react-bootstrap";
+import Spinner from "react-bootstrap/Spinner";
 
-const LinksStyle: React.CSSProperties = {
+const linksStyle: React.CSSProperties = {
   background: "rgb(100, 109, 115, 0.7)",
   marginTop: "4.3em",
+  minHeight: "800px",
   paddingBottom: "20px"
+};
+
+const linksLoadingStyle: React.CSSProperties = {
+  height: "-webkit-fill-available",
+  marginTop: "75px",
+  textAlign: "center",
+  fontWeight: "bold",
+  fontSize: "28px"
 };
 
 interface LinksItem {
@@ -52,10 +62,10 @@ export class Links extends React.Component<LinkssProps, LinkssState> {
   public render() {
     if (this.state.links === null) {
       return (
-        <Container style={LinksStyle} fluid={true}>
+        <Container style={linksStyle} fluid={true}>
           <Row>
-            <Col xs={12} md={12}>
-              Loading...
+            <Col xs={12} md={12} style={linksLoadingStyle}>
+              <Spinner animation="grow" />Loading...
             </Col>
           </Row>
         </Container>
@@ -65,7 +75,7 @@ export class Links extends React.Component<LinkssProps, LinkssState> {
         return link.title.indexOf(this.state.query) !== -1;
       });
       return (
-        <Container style={LinksStyle} fluid={true}>
+        <Container style={linksStyle} fluid={true}>
           <Row style={{ paddingTop: "20px" }}>
             <Col xs={2} md={2}/>
             <Col xs={6} md={6}>

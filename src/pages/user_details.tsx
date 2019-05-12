@@ -7,10 +7,20 @@ import { UserProfile } from "../components/user_profile/user_profile";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
+import Spinner from "react-bootstrap/Spinner";
 
-const UserDetailsStyle: React.CSSProperties = {
+const userDetailsStyle: React.CSSProperties = {
   background: "rgb(100, 109, 115, 0.7)",
-  marginTop: "4.3em"
+  marginTop: "4.3em",
+  minHeight: "800px"
+};
+
+const userDetailsLoadingStyle: React.CSSProperties = {
+  height: "-webkit-fill-available",
+  marginTop: "75px",
+  textAlign: "center",
+  fontWeight: "bold",
+  fontSize: "28px"
 };
 
 interface UserDetailsItem {
@@ -47,20 +57,24 @@ export class UserDetails extends React.Component<UserDetailsProps, UserDetailsSt
     })();
   }
 
+  public componentDidMount() {
+    window.scrollTo(0, 0);
+  }
+
   public render() {
     if (this.state.userDetails === null) {
       return (
-        <Container style={UserDetailsStyle} fluid={true}>
+        <Container style={userDetailsStyle} fluid={true}>
           <Row>
-            <Col xs={12} md={12}>
-              Loading...
+            <Col xs={12} md={12} style={userDetailsLoadingStyle}>
+              <Spinner animation="grow" />Loading...
             </Col>
           </Row>
         </Container>
       );
     } else {
       return (
-        <Container style={UserDetailsStyle} fluid={true}>
+        <Container style={userDetailsStyle} fluid={true}>
           <Row>
             <Col xs={2} md={2}/>
             <Col xs={6} md={6}>

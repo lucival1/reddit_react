@@ -9,8 +9,7 @@ import Col from "react-bootstrap/Col";
 const loginStyle: React.CSSProperties = {
   background: "rgb(100, 109, 115, 0.7)",
   marginTop: "4.3em",
-  height: "-webkit-fill-available",
-
+  minHeight: "800px"
 };
 
 interface LoginProps {

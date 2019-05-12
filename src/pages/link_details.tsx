@@ -9,18 +9,28 @@ import Row from "react-bootstrap/Row";
 import Container from "react-bootstrap/Container";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
+import Spinner from "react-bootstrap/Spinner";
 
-const LinkDetailsStyle: React.CSSProperties = {
+const linkDetailsStyle: React.CSSProperties = {
   background: "rgb(100, 109, 115, 0.7)",
-  marginTop: "4.3em"
+  marginTop: "4.3em",
+  minHeight: "800px"
 };
 
-const LinkDetailsSignInStyle: React.CSSProperties = {
+const linkDetailsSignInStyle: React.CSSProperties = {
   color: "white",
   fontSize: "20px",
   textAlign: "center",
   marginBottom: "20px"
 }
+
+const linkDetailsLoadingStyle: React.CSSProperties = {
+  height: "-webkit-fill-available",
+  marginTop: "75px",
+  textAlign: "center",
+  fontWeight: "bold",
+  fontSize: "28px"
+};
 
 interface LinkData {
   id: number;
@@ -59,12 +69,24 @@ export class LinkDetailsInternal extends React.Component<LinkDetailsProps, LinkD
     })();
   }
 
+  public componentDidMount() {
+    window.scrollTo(0, 0);
+  }
+
   public render() {
     if (this.state.link === null) {
-      return <div>Loading...</div>;
+      return (
+        <Container style={linkDetailsStyle} fluid={true}>
+          <Row>
+            <Col xs={12} md={12} style={linkDetailsLoadingStyle}>
+              <Spinner animation="grow" />Loading...
+            </Col>
+          </Row>
+        </Container>
+      );
     } else {
       return (
-        <Container style={LinkDetailsStyle} fluid={true}>
+        <Container style={linkDetailsStyle} fluid={true}>
           <Row>
             <Col xs={2} md={2} />
             <Col xs={7} md={7}>
@@ -119,7 +141,7 @@ export class LinkDetailsInternal extends React.Component<LinkDetailsProps, LinkD
       );
     } else {
       return (
-        <div style={LinkDetailsSignInStyle}>
+        <div style={linkDetailsSignInStyle}>
           <b>Please Sign In if you wish to write a comment...</b>
         </div>
       );

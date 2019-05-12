@@ -12,7 +12,7 @@ import Button from "react-bootstrap/Button";
 const linkEditorStyle: React.CSSProperties = {
   background: "rgb(100, 109, 115, 0.7)",
   marginTop: "4.3em",
-  height: "-webkit-fill-available"
+  minHeight: "800px"
 };
 
 const linkEditorBoxStyle: React.CSSProperties = {
