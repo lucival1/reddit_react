@@ -3,13 +3,13 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import * as serviceWorker from './serviceWorker';
-import {BrowserRouter, Switch, Route, Link} from "react-router-dom";
-import {Links} from "./pages/links";
-import {LinkDetails} from "./pages/link_details";
-import {LinkEditor} from "./pages/link_editor";
-import {Login} from './pages/login';
-import {Header} from "./components/header/header";
-import {UserDetails} from "./pages/user_details";
+import { BrowserRouter, Switch, Route } from "react-router-dom";
+import { Links } from "./pages/links";
+import { LinkDetails } from "./pages/link_details";
+import { LinkEditor } from "./pages/link_editor";
+import { Login } from './pages/login';
+import { Header } from "./components/header/header";
+import { UserDetails } from "./pages/user_details";
 
 ReactDOM.render(
   // This is the router component

@@ -1,10 +1,10 @@
 import * as React from "react";
-import {withRouter} from "react-router-dom";
+import { withRouter } from "react-router-dom";
+import { SingInOrSignUp } from "../components/sign_in_or_sign_up/sign_in_or_sign_up";
 import * as H from 'history';
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import {SingInOrSignUp} from "../components/sign_in_or_sign_up/sign_in_or_sign_up";
 
 const loginStyle: React.CSSProperties = {
   background: "rgb(100, 109, 115, 0.7)",

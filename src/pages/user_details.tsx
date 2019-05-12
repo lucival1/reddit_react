@@ -1,12 +1,17 @@
 import * as React from "react";
-import {Listview} from "../components/listview/listview";
+import { getAuthToken } from "../components/with_auth/with_auth";
+import { Comment } from "../components/comment/comment";
+import { Listview } from "../components/listview/listview";
+import { LinkEntry } from "../components/link_entry/link_entry";
+import { UserProfile } from "../components/user_profile/user_profile";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import {LinkEntry} from "../components/link_entry/link_entry";
-import {UserProfile} from "../components/user_profile/user_profile";
-import {getAuthToken} from "../components/with_auth/with_auth";
-import {Comment} from "../components/comment/comment";
+
+const UserDetailsStyle: React.CSSProperties = {
+  background: "rgb(100, 109, 115, 0.7)",
+  marginTop: "4.3em"
+};
 
 interface UserDetailsItem {
   id: number;
@@ -45,7 +50,7 @@ export class UserDetails extends React.Component<UserDetailsProps, UserDetailsSt
   public render() {
     if (this.state.userDetails === null) {
       return (
-        <Container style={{background: "rgb(100, 109, 115, 0.7)", marginTop: "4.3em"}} fluid={true}>
+        <Container style={UserDetailsStyle} fluid={true}>
           <Row>
             <Col xs={12} md={12}>
               Loading...
@@ -55,7 +60,7 @@ export class UserDetails extends React.Component<UserDetailsProps, UserDetailsSt
       );
     } else {
       return (
-        <Container style={{background: "rgb(100, 109, 115, 0.7)", marginTop: "4.3em"}} fluid={true}>
+        <Container style={UserDetailsStyle} fluid={true}>
           <Row>
             <Col xs={2} md={2}/>
             <Col xs={6} md={6}>
@@ -78,7 +83,7 @@ export class UserDetails extends React.Component<UserDetailsProps, UserDetailsSt
   private _renderLinks(links: []) {
     return (
       <React.Fragment>
-        <h3 style={{marginTop: "15px"}}>LINKS</h3>
+        <h3 style={{ marginTop: "15px" }}>LINKS</h3>
         <Listview
           items={
             links.map((link, linkIndex) => {

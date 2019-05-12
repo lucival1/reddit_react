@@ -7,6 +7,12 @@ import {CommunityInfo} from "../components/community_info/community_info";
 import {LinkEntry} from "../components/link_entry/link_entry";
 import {FormControl, InputGroup} from "react-bootstrap";
 
+const LinksStyle: React.CSSProperties = {
+  background: "rgb(100, 109, 115, 0.7)",
+  marginTop: "4.3em",
+  paddingBottom: "20px"
+};
+
 interface LinksItem {
   id: number;
   userId: number;
@@ -46,7 +52,7 @@ export class Links extends React.Component<LinkssProps, LinkssState> {
   public render() {
     if (this.state.links === null) {
       return (
-        <Container style={{background: "rgb(100, 109, 115, 0.7)", marginTop: "4.3em"}} fluid={true}>
+        <Container style={LinksStyle} fluid={true}>
           <Row>
             <Col xs={12} md={12}>
               Loading...
@@ -59,7 +65,7 @@ export class Links extends React.Component<LinkssProps, LinkssState> {
         return link.title.indexOf(this.state.query) !== -1;
       });
       return (
-        <Container style={{background: "rgb(100, 109, 115, 0.7)", marginTop: "4.3em"}} fluid={true}>
+        <Container style={LinksStyle} fluid={true}>
           <Row style={{ paddingTop: "20px" }}>
             <Col xs={2} md={2}/>
             <Col xs={6} md={6}>
