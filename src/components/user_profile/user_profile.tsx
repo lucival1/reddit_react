@@ -1,5 +1,5 @@
 import * as React from "react";
-import {getAuthToken} from "../with_auth/with_auth";
+import { getAuthToken } from "../with_auth/with_auth";
 import Col from "react-bootstrap/Col";
 import Image from "react-bootstrap/Image";
 import Row from "react-bootstrap/Row";

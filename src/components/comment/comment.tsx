@@ -1,7 +1,7 @@
 import React from 'react';
+import { getAuthToken } from "../with_auth/with_auth";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
-import {getAuthToken} from "../with_auth/with_auth";
 
 const rowStyle: React.CSSProperties = {
   margin: "10px",
@@ -55,19 +55,19 @@ export class Comment extends React.Component<CommentProps, CommentState> {
     return (
       <Row style={rowStyle}>
         <Col xs={1} md={1} style={voteStyle}>
-          <Col xs={12} md={12} style={{padding: "0px"}}>
+          <Col xs={12} md={12} style={{ padding: "0px" }}>
             <i className="fas fa-arrow-alt-circle-up fa-2x" onClick={() => this._handleVotes(item.id, 'up')}/><br/>
           </Col>
           <Col xs={12} md={12} style={scoreStyle}>
             {item.voteCount ? item.voteCount : 0}<br/>
           </Col>
-          <Col xs={12} md={12} style={{padding: "0px"}}>
+          <Col xs={12} md={12} style={{ padding: "0px" }}>
             <i className="fas fa-arrow-alt-circle-down fa-2x" onClick={() => this._handleVotes(item.id, 'down')}/>
           </Col>
         </Col>
 
         <Col xs={11} md={11} style={entryStyle}>
-          <Col xs={12} md={12} style={{textDecoration: 'none'}}>
+          <Col xs={12} md={12} style={{ textDecoration: 'none' }}>
             Posted by /u/{item.email} {this._renderTimeSinceDate(item.dateTime)}<br/><br/>
           </Col>
           <Col xs={12} md={12}>
@@ -91,7 +91,7 @@ export class Comment extends React.Component<CommentProps, CommentState> {
         }
       } catch (err) {
         console.log('err', err);
-        this.setState({error: err.error});
+        this.setState({ error: err.error });
       }
     })();
   }

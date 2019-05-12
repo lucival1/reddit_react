@@ -1,7 +1,7 @@
 import React from 'react';
+import { getAuthToken } from "../with_auth/with_auth";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import {getAuthToken} from "../with_auth/with_auth";
 
 const linkStyle: React.CSSProperties = {
   fontSize: "12px",
@@ -66,20 +66,20 @@ export class LinkDetails extends React.Component<LinkDetailsProps, LinkDetailsSt
     return (
       <Row style={rowStyle}>
         <Col xs={1} md={1} style={voteStyle}>
-          <Col xs={12} md={12} style={{padding: "0px"}}>
+          <Col xs={12} md={12} style={{ padding: "0px" }}>
             <i className="fas fa-arrow-alt-circle-up fa-2x" onClick={() => this._handleVotes(item.id, 'up')}/><br/>
           </Col>
           <Col xs={12} md={12} style={scoreStyle}>
             {item.voteCount ? item.voteCount : 0}<br/>
           </Col>
-          <Col xs={12} md={12} style={{padding: "0px"}}>
+          <Col xs={12} md={12} style={{ padding: "0px" }}>
             <i className="fas fa-arrow-alt-circle-down fa-2x" onClick={() => this._handleVotes(item.id, 'down')}/>
           </Col>
         </Col>
 
         <Col xs={11} md={11} style={entryStyle}>
           <Col xs={12} md={12}
-               style={{textDecoration: 'none'}}
+               style={{ textDecoration: 'none' }}
           >
             Posted by /u/{item.email} {this._renderTimeSinceDate(item.dateTime)}
           </Col>
@@ -110,7 +110,7 @@ export class LinkDetails extends React.Component<LinkDetailsProps, LinkDetailsSt
         }
       } catch (err) {
         console.log('err', err);
-        this.setState({error: err.error});
+        this.setState({ error: err.error });
       }
     })();
   }
