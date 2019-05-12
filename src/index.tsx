@@ -10,6 +10,7 @@ import { LinkEditor } from "./pages/link_editor";
 import { Login } from './pages/login';
 import { Header } from "./components/header/header";
 import { UserDetails } from "./pages/user_details";
+import {Footer} from "./components/footer/footer";
 
 ReactDOM.render(
   // This is the router component
@@ -44,7 +45,7 @@ ReactDOM.render(
         <Route exact path="/sign_up" component={Login}/>
 
       </Switch>
-      <div>Footer!</div>
+      <Footer/>
     </div>
   </BrowserRouter>,
   document.getElementById('root')
