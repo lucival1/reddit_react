@@ -2,6 +2,7 @@ import React from 'react';
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import {BlockBtn} from "../buttons/block_btn";
+import {getAuthToken} from "../with_auth/with_auth";
 
 const CommunityInfoBoxStyle: React.CSSProperties = {
   margin: "10px",
@@ -16,20 +17,25 @@ interface CommunityInfoProps {
 
 interface CommunityInfoState {
   count: string;
+  token: string;
 }
 
 export class CommunityInfo extends React.Component<CommunityInfoProps, CommunityInfoState> {
   public constructor(state: CommunityInfoState) {
     super(state);
     this.state = {
-      count: "0"
+      count: "0",
+      token: ""
     };
   }
 
   public componentWillMount() {
     (async () => {
+      const token = getAuthToken();
       const data = await getUserCount();
-      this.setState({count: data.count});
+      if(token) {
+        this.setState({count: data.count, token: token});
+      }
     })();
   }
 
@@ -51,12 +57,21 @@ export class CommunityInfo extends React.Component<CommunityInfoProps, Community
             <BlockBtn
               variant={"outline-dark"}
               name={"Create Post"}
-              path={"/link_editor"}
+              path={this._renderButtonPath()}
             />
+            {}
           </Row>
         </Col>
       </Row>
     );
+  }
+
+  private _renderButtonPath() {
+    if(this.state.token) {
+      return "/link_editor";
+    } else {
+      return "/sign_in";
+    }
   }
 }
 

@@ -129,7 +129,7 @@ export class LinkDetailsInternal extends React.Component<LinkDetailsProps, LinkD
           console.log('this.state.link.comments', this.state);
         }
       } catch (err) {
-
+          console.log("Create comment error: ", err);
       }
     })();
   }
