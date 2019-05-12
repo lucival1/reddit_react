@@ -1,8 +1,9 @@
 import React from 'react';
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import {BlockBtn} from "../buttons/block_btn";
 import {getAuthToken} from "../with_auth/with_auth";
+import {Button} from "react-bootstrap";
+import {NavLink} from "react-router-dom";
 
 const CommunityInfoBoxStyle: React.CSSProperties = {
   margin: "10px",
@@ -17,24 +18,21 @@ interface CommunityInfoProps {
 
 interface CommunityInfoState {
   count: string;
-  token: string;
 }
 
 export class CommunityInfo extends React.Component<CommunityInfoProps, CommunityInfoState> {
   public constructor(state: CommunityInfoState) {
     super(state);
     this.state = {
-      count: "0",
-      token: ""
+      count: "0"
     };
   }
 
   public componentWillMount() {
     (async () => {
-      const token = getAuthToken();
       const data = await getUserCount();
-      if(token) {
-        this.setState({count: data.count, token: token});
+      if(data) {
+        this.setState({count: data.count});
       }
     })();
   }
@@ -53,25 +51,24 @@ export class CommunityInfo extends React.Component<CommunityInfoProps, Community
             <Col xs={2} md={2}></Col>
             <Col xs={4} md={4}>{this.state.count} users</Col>
           </Row>
-          <Row style={{padding: "20px"}}>
-            <BlockBtn
-              variant={"outline-dark"}
-              name={"Create Post"}
-              path={this._renderButtonPath()}
-            />
-            {}
-          </Row>
+          <Col xs={12} md={12} style={{padding: "20px"}}>
+            <NavLink to={this._renderButtonPath()}>
+              <Button
+                style={{marginBottom: "20px"}}
+                variant={"outline-dark"}
+                block
+              >Create Post
+              </Button>
+            </NavLink>
+          </Col>
         </Col>
       </Row>
     );
   }
 
   private _renderButtonPath() {
-    if(this.state.token) {
-      return "/link_editor";
-    } else {
-      return "/sign_in";
-    }
+    const token = getAuthToken();
+    return token ? "/link_editor" : "/sign_in";
   }
 }
 

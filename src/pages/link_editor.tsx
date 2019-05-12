@@ -7,15 +7,7 @@ import Col from "react-bootstrap/Col";
 import InputGroup from "react-bootstrap/InputGroup";
 import {FormControl} from "react-bootstrap";
 import Button from "react-bootstrap/Button";
-
-interface UserDetailsItem {
-  id: number;
-  bio: string;
-  email: string;
-  pic: string;
-  links: [];
-  comments: [];
-}
+import {NavLink} from "react-router-dom";
 
 interface LinkEditorProps {
 }
@@ -36,7 +28,6 @@ export class LinkEditorI extends React.Component<LinkEditorProps, LinkEditorStat
 
   public render() {
     const token = getAuthToken();
-    console.log('token1', token);
     if (token === null) {
       return (
         <Container style={{background: "rgb(100, 109, 115, 0.7)", marginTop: "4.3em"}} fluid={true}>
@@ -46,7 +37,6 @@ export class LinkEditorI extends React.Component<LinkEditorProps, LinkEditorStat
               <b>Please Sign In if you wish to create a post...</b>
             </Col>
           </Row>
-          {this._renderForm()}
         </Container>
       );
     } else {
@@ -54,10 +44,8 @@ export class LinkEditorI extends React.Component<LinkEditorProps, LinkEditorStat
         <Container style={{background: "rgb(100, 109, 115, 0.7)", marginTop: "4.3em"}} fluid={true}>
           <Row>
             <Col xs={2} md={2}/>
-            <Col xs={6} md={6}>
-            </Col>
-            <Col xs={3} md={3}>
-
+            <Col xs={6} md={6} style={{marginTop: "20px"}}>
+              {this._renderForm()}
             </Col>
           </Row>
         </Container>
@@ -67,42 +55,45 @@ export class LinkEditorI extends React.Component<LinkEditorProps, LinkEditorStat
 
   private _renderForm() {
     return (
-      <React.Fragment>
+      <React.Fragment >
         <Row>
           <Col xs={2} md={2} />
-          <Col xs={8} md={8}>
-            <InputGroup className="mb-3">
-              <FormControl
-                placeholder="Enter new Title"
-                aria-label="title"
-                aria-describedby="title"
-                onKeyUp={(e: any) => this._newTitle((e as any).target.value)}
-              />
-            </InputGroup>
-          </Col>
-        </Row>
-        <Row>
-          <Col xs={2} md={2} />
-          <Col xs={8} md={8}>
-            <InputGroup className="mb-3">
-              <FormControl
-                placeholder="Enter new URL"
-                aria-label="url"
-                aria-describedby="url"
-                onKeyUp={(e: any) => this._newUrl((e as any).target.value)}
-              />
-            </InputGroup>
-          </Col>
-        </Row>
-        <Row>
-          <Col xs={9} md={9} />
-          <Col xs={2} md={2}>
-            <Button
-              style={{marginBottom: "20px"}}
-              variant={"primary"}
-              onClick={() => this._handleCreateLink()}
-            >SUBMIT
-            </Button>
+          <Col xs={9} md={9} style={{border: "black 3px solid", backgroundColor: "rgba(237, 239, 241, 0.8)"}}>
+            <Row>
+              <h3 style={{padding: "15px"}}>CREATE A NEW LINK</h3>
+              <InputGroup className="mb-3" style={{padding: "15px"}}>
+                <FormControl
+                  placeholder="Enter new Title"
+                  aria-label="title"
+                  aria-describedby="title"
+                  onKeyUp={(e: any) => this._newTitle((e as any).target.value)}
+                />
+              </InputGroup>
+            </Row>
+            <Row>
+              <InputGroup className="mb-3" style={{padding: "15px"}}>
+                <FormControl
+                  placeholder="Enter new URL"
+                  aria-label="url"
+                  aria-describedby="url"
+                  as="textarea"
+                  onKeyUp={(e: any) => this._newUrl((e as any).target.value)}
+                />
+              </InputGroup>
+            </Row>
+            <Row>
+              <Col xs={9} md={9} />
+              <Col xs={2} md={2}>
+                <NavLink to="/">
+                  <Button
+                    style={{marginBottom: "20px"}}
+                    variant={"primary"}
+                    onClick={() => this._handleCreateLink()}
+                  >SUBMIT
+                  </Button>
+                </NavLink>
+              </Col>
+            </Row>
           </Col>
         </Row>
       </React.Fragment>
@@ -123,12 +114,11 @@ export class LinkEditorI extends React.Component<LinkEditorProps, LinkEditorStat
       try {
         const token = getAuthToken();
         if (token) {
-          const newLink = await createLink(
+          await createLink(
             this.state.newTitle,
             this.state.newUrl,
             token
           );
-          // redirect to links page
         }
       } catch (err) {
         console.log("Create link error: ", err);
