@@ -1,7 +1,9 @@
 import React from 'react';
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import {BlockBtn} from "../buttons/block_btn";
+import {getAuthToken} from "../with_auth/with_auth";
+import {Button} from "react-bootstrap";
+import {NavLink} from "react-router-dom";
 
 const CommunityInfoBoxStyle: React.CSSProperties = {
   margin: "10px",
@@ -29,7 +31,9 @@ export class CommunityInfo extends React.Component<CommunityInfoProps, Community
   public componentWillMount() {
     (async () => {
       const data = await getUserCount();
-      this.setState({count: data.count});
+      if(data) {
+        this.setState({count: data.count});
+      }
     })();
   }
 
@@ -47,16 +51,24 @@ export class CommunityInfo extends React.Component<CommunityInfoProps, Community
             <Col xs={2} md={2}></Col>
             <Col xs={4} md={4}>{this.state.count} users</Col>
           </Row>
-          <Row style={{padding: "20px"}}>
-            <BlockBtn
-              variant={"outline-dark"}
-              name={"Create Post"}
-              path={"/link_editor"}
-            />
-          </Row>
+          <Col xs={12} md={12} style={{padding: "20px"}}>
+            <NavLink to={this._renderButtonPath()}>
+              <Button
+                style={{marginBottom: "20px"}}
+                variant={"outline-dark"}
+                block
+              >Create Post
+              </Button>
+            </NavLink>
+          </Col>
         </Col>
       </Row>
     );
+  }
+
+  private _renderButtonPath() {
+    const token = getAuthToken();
+    return token ? "/link_editor" : "/sign_in";
   }
 }
 
