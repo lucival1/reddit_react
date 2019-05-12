@@ -1,11 +1,11 @@
 import React from 'react';
-import Col from "react-bootstrap/Col";
-import Button from "react-bootstrap/Button";
-import {setAuthToken} from "../with_auth/with_auth";
+import { setAuthToken } from "../with_auth/with_auth";
 import * as H from "history";
 import * as joi from "joi";
+import Col from "react-bootstrap/Col";
+import Button from "react-bootstrap/Button";
 import InputGroup from "react-bootstrap/InputGroup";
-import {FormControl} from "react-bootstrap";
+import FormControl from "react-bootstrap/FormControl";
 
 // Styles
 const ErrorStyle: React.CSSProperties = {
@@ -136,7 +136,7 @@ export class SingInOrSignUp extends React.Component<SingInOrSignUpProps, SingInO
     if (this.state.error === null) {
       return <div></div>;
     } else {
-      return <div style={{color: "red"}}>{this.state.error}</div>;
+      return <div style={{ color: "red" }}>{this.state.error}</div>;
     }
   }
 
@@ -198,17 +198,17 @@ export class SingInOrSignUp extends React.Component<SingInOrSignUpProps, SingInO
 
   // Update the state (email) on keyup
   private _updateEmail(email: string) {
-    this.setState({email: email});
+    this.setState({ email: email });
   }
 
   // Update the state (password) on keyup
   private _updatePassword(password: string) {
-    this.setState({password: password});
+    this.setState({ password: password });
   }
 
   // Update the state (password) on keyup
   private _updateConfirmationPassword(confirmationPassword: string) {
-    this.setState({confirmationPassword: confirmationPassword});
+    this.setState({ confirmationPassword: confirmationPassword });
   }
 
   // Send HTTP request on click
@@ -217,7 +217,7 @@ export class SingInOrSignUp extends React.Component<SingInOrSignUpProps, SingInO
       try {
         const token = await getToken(this.state.email, this.state.password);
         // Reset error
-        this.setState({error: null});
+        this.setState({ error: null });
         // Save token in window object
         // (window as any).__token = token;
         setAuthToken(token);
@@ -225,7 +225,7 @@ export class SingInOrSignUp extends React.Component<SingInOrSignUpProps, SingInO
         this.props.history.push("/");
       } catch (err) {
         console.log('err', err);
-        this.setState({error: err.error});
+        this.setState({ error: err.error });
       }
     })();
   }
@@ -243,12 +243,12 @@ export class SingInOrSignUp extends React.Component<SingInOrSignUpProps, SingInO
         try {
           await createNewUser(this.state.email, this.state.password);
           // Reset error
-          this.setState({error: null});
+          this.setState({ error: null });
           // Redirect to home page
           this.props.history.push("/sign_in");
         } catch (err) {
           console.log('err', err);
-          this.setState({error: err.error});
+          this.setState({ error: err.error });
         }
       })();
     } else {

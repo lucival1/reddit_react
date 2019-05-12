@@ -1,8 +1,8 @@
 import React from 'react';
+import { getAuthToken } from "../with_auth/with_auth";
+import { Link } from "react-router-dom";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import {Link} from "react-router-dom";
-import {getAuthToken} from "../with_auth/with_auth";
 
 const linkStyle: React.CSSProperties = {
   fontSize: "12px",
@@ -58,35 +58,21 @@ export class LinkEntry extends React.Component<LinkEntryProps> {
     const {...item} = this.props;
     return (
       <Row style={rowStyle}>
-        <Col xs={1} md={1}
-             style={voteStyle}
-        >
-          <Col xs={12} md={12}
-               style={{padding: "0px"}}
-          >
+        <Col xs={1} md={1} style={voteStyle}>
+          <Col xs={12} md={12} style={{ padding: "0px" }}>
             <i className="fas fa-arrow-alt-circle-up fa-2x" onClick={() => this._handleVotes(item.id, 'up')}/><br/>
           </Col>
-          <Col xs={12} md={12}
-               style={scoreStyle}
-          >
+          <Col xs={12} md={12} style={scoreStyle}>
             {item.voteCount ? item.voteCount : 0}<br/>
           </Col>
-          <Col xs={12} md={12}
-               style={{padding: "0px"}}
-          >
+          <Col xs={12} md={12} style={{ padding: "0px" }}>
             <i className="fas fa-arrow-alt-circle-down fa-2x" onClick={() => this._handleVotes(item.id, 'down')}/>
           </Col>
         </Col>
 
-        <Col xs={11} md={11}
-             style={entryStyle}
-        >
-          <Link to={`/link/${item.id}`}
-                style={linkStyle}
-          >
-            <Col xs={12} md={12}
-                 style={{ textDecoration: 'none' }}
-            >
+        <Col xs={11} md={11} style={entryStyle}>
+          <Link to={`/link/${item.id}`} style={linkStyle}>
+            <Col xs={12} md={12} style={{ textDecoration: 'none' }}>
               Posted by /u/{item.email} {this._renderTimeSinceDate(item.dateTime)}
             </Col>
             <Col xs={12} md={12}>

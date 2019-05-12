@@ -1,13 +1,34 @@
 import React from 'react';
-import {withRouter} from "react-router";
-import {getAuthToken} from "../components/with_auth/with_auth";
+import { withRouter } from "react-router";
+import { getAuthToken } from "../components/with_auth/with_auth";
+import { NavLink } from "react-router-dom";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import InputGroup from "react-bootstrap/InputGroup";
-import {FormControl} from "react-bootstrap";
+import FormControl from "react-bootstrap/FormControl";
 import Button from "react-bootstrap/Button";
-import {NavLink} from "react-router-dom";
+
+const linkEditorStyle: React.CSSProperties = {
+  background: "rgb(100, 109, 115, 0.7)",
+  marginTop: "4.3em",
+  minHeight: "800px"
+};
+
+const linkEditorBoxStyle: React.CSSProperties = {
+  border: "black 3px solid",
+  borderRadius: "5px",
+  background: "rgb(247, 248, 249)"
+
+};
+
+const linkEditorSignInStyle: React.CSSProperties = {
+  marginTop: "50px",
+  color: "white",
+  fontSize: "20px",
+  textAlign: "center",
+  padding: "15px"
+}
 
 interface LinkEditorProps {
 }
@@ -30,10 +51,10 @@ export class LinkEditorI extends React.Component<LinkEditorProps, LinkEditorStat
     const token = getAuthToken();
     if (token === null) {
       return (
-        <Container style={{background: "rgb(100, 109, 115, 0.7)", marginTop: "4.3em"}} fluid={true}>
+        <Container style={linkEditorStyle} fluid={true}>
           <Row>
-            <Col xs={2} md={2} />
-            <Col xs={8} md={8} style={{color: "white", fontSize: "20px", textAlign: "center", padding: "15px"}}>
+            <Col xs={2} md={2}/>
+            <Col xs={8} md={8} style={linkEditorSignInStyle}>
               <b>Please Sign In if you wish to create a post...</b>
             </Col>
           </Row>
@@ -41,10 +62,10 @@ export class LinkEditorI extends React.Component<LinkEditorProps, LinkEditorStat
       );
     } else {
       return (
-        <Container style={{background: "rgb(100, 109, 115, 0.7)", marginTop: "4.3em"}} fluid={true}>
+        <Container style={linkEditorStyle} fluid={true}>
           <Row>
             <Col xs={2} md={2}/>
-            <Col xs={6} md={6} style={{marginTop: "20px"}}>
+            <Col xs={6} md={6} style={{ margin: "50px" }}>
               {this._renderForm()}
             </Col>
           </Row>
@@ -55,13 +76,13 @@ export class LinkEditorI extends React.Component<LinkEditorProps, LinkEditorStat
 
   private _renderForm() {
     return (
-      <React.Fragment >
+      <React.Fragment>
         <Row>
-          <Col xs={2} md={2} />
-          <Col xs={9} md={9} style={{border: "black 3px solid", backgroundColor: "rgba(237, 239, 241, 0.8)"}}>
+          <Col xs={2} md={2}/>
+          <Col xs={9} md={9} style={linkEditorBoxStyle}>
             <Row>
-              <h3 style={{padding: "15px"}}>CREATE A NEW LINK</h3>
-              <InputGroup className="mb-3" style={{padding: "15px"}}>
+              <h3 style={{ padding: "10px 15px 5px 15px" }}>CREATE A NEW LINK</h3>
+              <InputGroup className="mb-3" style={{ padding: "5px 15px 5px 15px" }}>
                 <FormControl
                   placeholder="Enter new Title"
                   aria-label="title"
@@ -71,7 +92,7 @@ export class LinkEditorI extends React.Component<LinkEditorProps, LinkEditorStat
               </InputGroup>
             </Row>
             <Row>
-              <InputGroup className="mb-3" style={{padding: "15px"}}>
+              <InputGroup className="mb-3" style={{ padding: "5px 15px 5px 15px" }}>
                 <FormControl
                   placeholder="Enter new URL"
                   aria-label="url"
@@ -82,11 +103,11 @@ export class LinkEditorI extends React.Component<LinkEditorProps, LinkEditorStat
               </InputGroup>
             </Row>
             <Row>
-              <Col xs={9} md={9} />
+              <Col xs={9} md={9}/>
               <Col xs={2} md={2}>
                 <NavLink to="/">
                   <Button
-                    style={{marginBottom: "20px"}}
+                    style={{ marginBottom: "20px" }}
                     variant={"primary"}
                     onClick={() => this._handleCreateLink()}
                   >SUBMIT
@@ -101,22 +122,23 @@ export class LinkEditorI extends React.Component<LinkEditorProps, LinkEditorStat
   }
 
   private _newTitle(title: string) {
-    this.setState({ newTitle: title });
+    this.setState({newTitle: title});
   }
 
   private _newUrl(url: string) {
-    this.setState({ newUrl: url });
+    this.setState({newUrl: url});
   }
 
   private _handleCreateLink() {
     (async () => {
-      console.log('trying to create link');
       try {
         const token = getAuthToken();
-        if (token) {
+        const newTitle = this.state.newTitle;
+        const newUrl = this.state.newUrl;
+        if (token && newTitle && newUrl) {
           await createLink(
-            this.state.newTitle,
-            this.state.newUrl,
+            newTitle,
+            newUrl,
             token
           );
         }

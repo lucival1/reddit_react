@@ -1,14 +1,36 @@
 import * as React from "react";
-import {LinkDetails as LinkDetailsComponent} from "../components/link_details/link_details";
-import {withRouter} from "react-router";
-import {Comment, CommentDetails} from "../components/comment/comment";
-import {Listview} from "../components/listview/listview";
-import {getAuthToken} from "../components/with_auth/with_auth"
+import { LinkDetails as LinkDetailsComponent } from "../components/link_details/link_details";
+import { withRouter } from "react-router";
+import { Comment, CommentDetails } from "../components/comment/comment";
+import { Listview } from "../components/listview/listview";
+import { getAuthToken } from "../components/with_auth/with_auth"
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import Container from "react-bootstrap/Container";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
+import Spinner from "react-bootstrap/Spinner";
+
+const linkDetailsStyle: React.CSSProperties = {
+  background: "rgb(100, 109, 115, 0.7)",
+  marginTop: "4.3em",
+  minHeight: "800px"
+};
+
+const linkDetailsSignInStyle: React.CSSProperties = {
+  color: "white",
+  fontSize: "20px",
+  textAlign: "center",
+  marginBottom: "20px"
+}
+
+const linkDetailsLoadingStyle: React.CSSProperties = {
+  height: "-webkit-fill-available",
+  marginTop: "75px",
+  textAlign: "center",
+  fontWeight: "bold",
+  fontSize: "28px"
+};
 
 interface LinkData {
   id: number;
@@ -47,14 +69,26 @@ export class LinkDetailsInternal extends React.Component<LinkDetailsProps, LinkD
     })();
   }
 
+  public componentDidMount() {
+    window.scrollTo(0, 0);
+  }
+
   public render() {
     if (this.state.link === null) {
-      return <div>Loading...</div>;
+      return (
+        <Container style={linkDetailsStyle} fluid={true}>
+          <Row>
+            <Col xs={12} md={12} style={linkDetailsLoadingStyle}>
+              <Spinner animation="grow" />Loading...
+            </Col>
+          </Row>
+        </Container>
+      );
     } else {
       return (
-        <Container style={{background: "rgb(100, 109, 115, 0.7)", marginTop: "4.3em"}} fluid={true}>
+        <Container style={linkDetailsStyle} fluid={true}>
           <Row>
-            <Col xs={2} md={2}/>
+            <Col xs={2} md={2} />
             <Col xs={7} md={7}>
               <LinkDetailsComponent {...this.state.link} />
               <Listview
@@ -83,7 +117,8 @@ export class LinkDetailsInternal extends React.Component<LinkDetailsProps, LinkD
             <Row>
               <Col xs={12} md={12}>
                 <Form.Group controlId="newComment.Textarea">
-                  <Form.Control as="textarea" rows="5" placeholder="Enter new comment"
+                  <Form.Control as="textarea" rows="5"
+                                placeholder="Enter new comment"
                                 value={this.state.newCommentContent}
                                 onChange={(e: any) => this.setState({newCommentContent: e.currentTarget.value})}
                   />
@@ -91,10 +126,10 @@ export class LinkDetailsInternal extends React.Component<LinkDetailsProps, LinkD
               </Col>
             </Row>
             <Row>
-              <Col xs={10} md={10}/>
+              <Col xs={10} md={10} />
               <Col xs={2} md={2}>
                 <Button
-                  style={{marginBottom: "20px"}}
+                  style={{ marginBottom: "20px" }}
                   variant={"primary"}
                   onClick={() => this._handleCreateComment()}
                 >SUBMIT
@@ -106,7 +141,7 @@ export class LinkDetailsInternal extends React.Component<LinkDetailsProps, LinkD
       );
     } else {
       return (
-        <div style={{color: "white", fontSize: "20px", textAlign: "center"}}>
+        <div style={linkDetailsSignInStyle}>
           <b>Please Sign In if you wish to write a comment...</b>
         </div>
       );
@@ -135,7 +170,7 @@ export class LinkDetailsInternal extends React.Component<LinkDetailsProps, LinkD
   }
 }
 
-export const LinkDetails = withRouter(props => <LinkDetailsInternal linkId={props.match.params.link_id}/>)
+export const LinkDetails = withRouter(props => <LinkDetailsInternal linkId={props.match.params.link_id} />)
 
 async function getData(id: string) {
   const response = await fetch(`/api/v1/links/${id}`);

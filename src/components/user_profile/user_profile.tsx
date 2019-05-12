@@ -1,8 +1,9 @@
 import * as React from "react";
-import {getAuthToken} from "../with_auth/with_auth";
+import { getAuthToken } from "../with_auth/with_auth";
 import Col from "react-bootstrap/Col";
 import Image from "react-bootstrap/Image";
 import Row from "react-bootstrap/Row";
+import Spinner from "react-bootstrap/Spinner";
 
 const userProfileBoxStyle: React.CSSProperties = {
   margin: "10px",
@@ -23,6 +24,14 @@ const userProfileContentStyle: React.CSSProperties = {
   lineHeight: "1.5",
   padding: "15px"
 }
+
+const userProfileLoadingStyle: React.CSSProperties = {
+  height: "-webkit-fill-available",
+  marginTop: "75px",
+  textAlign: "center",
+  fontWeight: "bold",
+  fontSize: "28px"
+};
 
 interface UserProfileProps {
   email: string;
@@ -55,7 +64,13 @@ export class UserProfile extends React.Component<UserProfileProps, UserProfileSt
 
   private _renderUserDetails() {
     if (this.props === null) {
-      return <div>Loading...</div>
+      return (
+        <Row>
+          <Col xs={12} md={12} style={userProfileLoadingStyle}>
+            <Spinner animation="grow" />Loading...
+          </Col>
+        </Row>
+      );
     } else {
       return (
         <Col xs={12} md={12} style={userProfileBoxStyle}>
